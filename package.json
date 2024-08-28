@@ -11,14 +11,16 @@
   },
   "dependencies": {
     "buffer-from": "^1.0.0",
-    "source-map": "^0.6.0"
+    "source-map": "^0.6.0",
+    "uglify-js": "^3.19.2"
   },
   "devDependencies": {
     "browserify": "^17.0.0",
     "coffeescript": "^1.12.7",
     "http-server": "^14.1.1",
     "mocha": "^10.7.3",
-    "webpack": "^5.94.0"
+    "webpack": "^5.94.0",
+    "webpack-cli": "^5.1.4"
   },
   "repository": {
     "type": "git",
