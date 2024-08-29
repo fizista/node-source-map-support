@@ -10,7 +10,7 @@
     "test": "mocha"
   },
   "dependencies": {
-    "buffer-from": "^1.0.0",
+    "buffer-from": "^1.1.2",
     "source-map": "^0.6.0",
     "uglify-js": "^3.19.2"
   },
