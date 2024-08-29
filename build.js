@@ -10,6 +10,7 @@ var UglifyJS = require("uglify-js");
 const browserify = path.resolve(path.join('node_modules', '.bin', 'browserify'));
 const webpack = path.resolve(path.join('node_modules', '.bin', 'webpack'));
 const coffee = path.resolve(path.join('node_modules', '.bin', 'coffee'));
+const vite = path.resolve(path.join('node_modules', '.bin', 'vite'));
 
 function run(command, callback) {
   console.log(command);
@@ -74,3 +75,9 @@ run(coffee + ' --map --compile header-test/script.coffee', error => {
 child_process.exec(webpack, {cwd: 'webpack-test'}, error => {
   if (error) throw error;
 });
+
+
+child_process.exec(vite + ' build --outDir ../', {cwd: 'vite-test/src'}, error => {
+  if (error) throw error;
+});
+

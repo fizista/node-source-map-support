@@ -8,3 +8,5 @@ browserify-test/script.js.map
 header-test/script.js
 header-test/script.js.map
 webpack-test/compiled.js
+vite-test/index.html
+vite-test/assets/
