@@ -1,7 +1,22 @@
 var traceMapping = require('@jridgewell/trace-mapping');
 var TraceMap = traceMapping.TraceMap;
 var originalPositionFor = traceMapping.originalPositionFor;
-var path = require('path');
+
+function pathDirname(file) {
+  return file.substring(0, file.lastIndexOf('/'));
+}
+
+function pathResolve(dir, file) {
+  if (dir === '.') {
+    try {
+      dir = process.cwd()
+    } catch (e) {
+      var loc = window.location.pathname;
+      dir = loc.substring(0, loc.lastIndexOf('/'));
+    }
+  }
+  return new URL(file, 'file://' + dir + '/').pathname
+}
 
 var fs;
 try {
@@ -135,16 +150,16 @@ retrieveFileHandlers.push(function(path) {
 // in case we are in the browser (i.e. directories may start with "http://" or "file:///")
 function supportRelativeURL(file, url) {
   if (!file) return url;
-  var dir = path.dirname(file);
+  var dir = pathDirname(file);
   var match = /^\w+:\/\/[^\/]*/.exec(dir);
   var protocol = match ? match[0] : '';
   var startPath = dir.slice(protocol.length);
   if (protocol && /^\/\w\:/.test(startPath)) {
     // handle file:///C:/ paths
     protocol += '/';
-    return protocol + path.resolve(dir.slice(protocol.length), url).replace(/\\/g, '/');
+    return protocol + pathResolve(dir.slice(protocol.length), url).replace(/\\/g, '/');
   }
-  return protocol + path.resolve(dir.slice(protocol.length), url);
+  return protocol + pathResolve(dir.slice(protocol.length), url);
 }
 
 function retrieveSourceMapURL(source) {
