@@ -76,7 +76,7 @@ child_process.exec(webpack, {cwd: 'webpack-test'}, error => {
   if (error) throw error;
 });
 
-
+// Build the vite test
 child_process.exec(vite + ' build --outDir ../', {cwd: 'vite-test/src'}, error => {
   if (error) throw error;
 });
