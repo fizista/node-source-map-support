@@ -2,14 +2,6 @@ var traceMapping = require('@jridgewell/trace-mapping');
 var TraceMap = traceMapping.TraceMap;
 var originalPositionFor = traceMapping.originalPositionFor;
 
-const isNode = () =>
-  typeof process !== 'undefined' &&
-  !!process.versions &&
-  !!process.versions.node;
-
-const isBrowser = () =>
-  ![typeof window, typeof document].includes('undefined');
-
 function pathDirname(file) {
   return file.substring(0, file.lastIndexOf('/'));
 }
@@ -215,12 +207,10 @@ retrieveMapHandlers.push(function(source) {
   if (reSourceMap.test(sourceMappingURL)) {
     // Support source map URL as a data url
     var rawData = sourceMappingURL.slice(sourceMappingURL.indexOf(',') + 1);
-    if (isBrowser) {
+    if (isInBrowser()) {
       sourceMapData = window.atob(rawData)
-    } else if (isNode()) {
-      sourceMapData = bufferFrom(rawData, "base64").toString();
     } else {
-      throw Error('Unknown environment!')
+      sourceMapData = bufferFrom(rawData, "base64").toString();
     }
 
     sourceMappingURL = source;
